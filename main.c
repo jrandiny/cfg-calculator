@@ -27,19 +27,23 @@ int main()
     scanf("%s", s);
     while(strcmp(s,"exit") != 0){
 
-        status = 1;
-        //status = 0 syntax errror
-        //status = 1 ekspresi valid
+        status = 0;
+        //status = 0 ekspresi valid
+        //status = 1 syntax errror
         //status = 2 math error
         idx = 0;
         res = 0;
         plusMinus(s, &idx, &res, &status);
         printf(">> ");
-        if (status==1 && s[idx]=='\0'){
+        if (status==0 && s[idx]=='\0'){
             printf("%.2f\n",res);
         }else{
-            if(status == 0) printf("Syntax Error\n");
-            else printf("Math Error\n"); //status = 2
+            if (status == 2 && s[idx] =='\0'){
+                printf("Math Error\n");
+            }
+            else{
+                printf("Syntax Error\n");
+            }
         }
 
         printf("\nSilahkan masukkan input: (ketik 'exit' untuk mengakhiri program)\n");
