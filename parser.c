@@ -1,85 +1,87 @@
 #include "parser.h"
 
-boolean isNumber(char st) {
-    return (st >= '0') && (st <='9');
+boolean isNumber(char strIn)
+{
+    return (strIn >= '0') && (strIn <='9');
 }
 
-void Calculate(char *st, int *idx, float *result, boolean *valid)
+void plusMinus(char *strIn, int *idx, float *result, boolean *valid)
 {
   /* KAMUS LOKAL */
   float temp;
   char tempChar;
 
   /* ALGORITMA */
-  if (st[*idx]!='\0'){
+  if (strIn[*idx]!='\0'){
 
-      KaliBagi(st, idx, result,valid);
-      while (st[*idx] == '+' || st[*idx] == '-'){
-        if(st[*idx] == '+'){
+      kaliBagi(strIn, idx, result,valid);
+      while((strIn[*idx] == '+') ||( strIn[*idx] == '-')){
+        if(strIn[*idx] == '+'){
           (*idx)++;
-          KaliBagi(st,idx,&temp,valid);
+          kaliBagi(strIn,idx,&temp,valid);
           *result += temp;
-        }else if(st[*idx] == '-'){
+        }else if(strIn[*idx] == '-'){
           (*idx)++;
-          KaliBagi(st,idx,&temp,valid);
+          kaliBagi(strIn,idx,&temp,valid);
           *result -= temp;
         }
       }
-      /* st[*idx] != '+' atau '-' */
+      /* strIn[*idx] != '+' atau '-' */
   }
 }
 
-void KaliBagi(char *st,int *idx, float *result,boolean *valid)
+void kaliBagi(char *strIn,int *idx, float *result,boolean *valid)
 {
   /* KAMUS LOKAL*/
   float temp;
 
   /* ALGORITMA */
-  Sign(st,idx,result,valid);
+  sign(strIn,idx,result,valid);
 
-  while (st[*idx] == '*' || st[*idx] == '/'){
-    if(st[*idx] == '*'){
+  while((strIn[*idx] == '*') || (strIn[*idx] == '/')){
+    if(strIn[*idx] == '*'){
       (*idx)++;
-      Sign(st,idx,&temp,valid);
+      sign(strIn,idx,&temp,valid);
       (*result) *= temp;
-    }else if(st[*idx] == '/'){
+    }else if(strIn[*idx] == '/'){
       (*idx)++;
-      Sign(st,idx,&temp,valid);
+      sign(strIn,idx,&temp,valid);
       (*result) /= temp;
     }
   }
 }
 
-void Sign(char *st,int *idx, float *result,boolean *valid)
+void sign(char *strIn,int *idx, float *result,boolean *valid)
 {
-  float temp = 0;
-  int x = 1;
-  if(st[*idx] == '(') {
-      (*idx)++;
-      Calculate(st,idx,result,valid);
-      if (st[*idx] == ')')
-          (*idx)++;
-      //else print error
-  } else {
-      if (st[*idx] == '-')
-      {
-          (*idx)++;
-          x = -1;
-      }
-      if (isNumber(st[*idx]))
-      {
+  /* KAMUS LOKAL */
 
-          *result = getNumber(st, idx);
-          temp = 0;
-      }
-      else
-      {
-          *valid = false;
-      }
+  /* ALGORITMA */
+  if(strIn[*idx] == '('){
+    (*idx)++;
+    plusMinus(strIn,idx,result,valid);
+    if(strIn[*idx] == ')'){
+      (*idx)++;
+    }else{
+      *valid = false;
+    }
+  }else{
+    /* Cek negatif*/
+    if(strIn[*idx] == '-'){
+      (*idx)++;
+      *result = -1;
+    }else{
+      *result = 1;
+    }
+
+    if(isNumber(strIn[*idx])){
+      *result *= getNumber(strIn, idx);
+    }else{
+      *valid = false;
+    }
   }
 }
 
-float getNumber(char *st, int *idx)
+float getNumber(char *strIn, int *idx)
 {
   /* KAMUS LOKAL */
   float temp;
@@ -93,14 +95,14 @@ float getNumber(char *st, int *idx)
   floatPart = false;
 
   do{
-    tempChar = st[*idx];
+    tempChar = strIn[*idx];
     if(isNumber(tempChar)||tempChar=='.'){
 
       if(tempChar=='.'){
         floatPart = true;
         floatDiv = 10;
         (*idx)++;
-        tempChar = st[*idx];
+        tempChar = strIn[*idx];
         tempDigit = tempChar - '0';
       }else{
         tempDigit = tempChar - '0';
