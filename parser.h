@@ -5,10 +5,9 @@
 #include "boolean.h"
 
 /*
-S -> T | S+T | S-T calculate
-T -> F | T*F | T/F KaliBagi
+S -> T | S+T | S-T plusMinus
+T -> F | T*F | T/F kaliBagi
 F -> (S) | A sign
-A -> 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | AA number
 */
 
 boolean isNumber(char strIn);
