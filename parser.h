@@ -10,10 +10,10 @@ T -> F | T*F | T/F kaliBagi
 F -> (S) | A sign
 */
 
-boolean isNumber(char strIn);
-void plusMinus(char *strIn, int *idx, float *result, boolean *valid);
-void kaliBagi(char *strIn,int *idx, float *result,boolean *valid);
-void sign(char *strIn,int *idx, float *result,boolean *valid);
+int isNumber(char strIn);
+void plusMinus(char *strIn, int *idx, float *result, int *status);
+void kaliBagi(char *strIn,int *idx, float *result,int *status);
+void sign(char *strIn,int *idx, float *result,int *status);
 float getNumber(char *strIn, int *idx);
 
 #endif

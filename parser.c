@@ -1,66 +1,67 @@
 #include "parser.h"
 
-boolean isNumber(char strIn)
+int isNumber(char strIn)
 {
     return (strIn >= '0') && (strIn <='9');
 }
 
-void plusMinus(char *strIn, int *idx, float *result, boolean *valid)
+void plusMinus(char *strIn, int *idx, float *result, int *status)
 {
   /* KAMUS LOKAL */
   float temp;
   char tempChar;
 
   /* ALGORITMA */
-  kaliBagi(strIn, idx, result,valid);
+  kaliBagi(strIn, idx, result,status);
   while((strIn[*idx] == '+') ||( strIn[*idx] == '-')){
     if(strIn[*idx] == '+'){
       (*idx)++;
-      kaliBagi(strIn,idx,&temp,valid);
+      kaliBagi(strIn,idx,&temp,status);
       *result += temp;
     }else if(strIn[*idx] == '-'){
       (*idx)++;
-      kaliBagi(strIn,idx,&temp,valid);
+      kaliBagi(strIn,idx,&temp,status);
       *result -= temp;
     }
   }
   /* strIn[*idx] != '+' atau '-' */
 }
 
-void kaliBagi(char *strIn,int *idx, float *result,boolean *valid)
+void kaliBagi(char *strIn,int *idx, float *result,int *status)
 {
   /* KAMUS LOKAL*/
   float temp;
 
   /* ALGORITMA */
-  sign(strIn,idx,result,valid);
+  sign(strIn,idx,result,status);
 
   while((strIn[*idx] == '*') || (strIn[*idx] == '/')){
     if(strIn[*idx] == '*'){
       (*idx)++;
-      sign(strIn,idx,&temp,valid);
+      sign(strIn,idx,&temp,status);
       (*result) *= temp;
     }else if(strIn[*idx] == '/'){
       (*idx)++;
-      sign(strIn,idx,&temp,valid);
-      (*result) /= temp;
+      sign(strIn,idx,&temp,status);
+      if(temp != 0) (*result) /= temp;
+      else *status = 2; //pembagian dengan nol
     }
   }
   /* strIn[*idx] != '*' atau '/' */
 }
 
-void sign(char *strIn,int *idx, float *result,boolean *valid)
+void sign(char *strIn,int *idx, float *result,int *status)
 {
   /* KAMUS LOKAL */
 
   /* ALGORITMA */
   if(strIn[*idx] == '('){
     (*idx)++;
-    plusMinus(strIn,idx,result,valid);
+    plusMinus(strIn,idx,result,status);
     if(strIn[*idx] == ')'){
       (*idx)++;
     }else{
-      *valid = false;
+      *status = 1;
     }
   }else{
     /* Cek negatif*/
@@ -74,7 +75,7 @@ void sign(char *strIn,int *idx, float *result,boolean *valid)
     if(isNumber(strIn[*idx])){
       *result *= getNumber(strIn, idx);
     }else{
-      *valid = false;
+      *status = 1;
     }
   }
 }

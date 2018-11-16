@@ -5,7 +5,7 @@
 int main()
 {
     /* KAMUS */
-    boolean valid;
+    int status;
     int idx;
     float res;
     char s[50];
@@ -27,14 +27,19 @@ int main()
     scanf("%s", s);
     while(strcmp(s,"exit") != 0){
 
-        valid = true;
+        status = 1;
+        //status = 0 syntax errror
+        //status = 1 ekspresi valid
+        //status = 2 math error
         idx = 0;
         res = 0;
-        plusMinus(s, &idx, &res, &valid);
-        if (valid && s[idx]=='\0'){
-          printf(">> %.2f\n",res);
+        plusMinus(s, &idx, &res, &status);
+        printf(">> ");
+        if (status==1 && s[idx]=='\0'){
+            printf("%.2f\n",res);
         }else{
-          printf(">> SINTAKS ERROR\n");
+            if(status == 0) printf("Syntax Error\n");
+            else printf("Math Error\n"); //status = 2
         }
 
         printf("\nSilahkan masukkan input: (ketik 'exit' untuk mengakhiri program)\n");
