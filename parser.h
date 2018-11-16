@@ -13,6 +13,7 @@ F -> (S) | A sign
 int isNumber(char strIn);
 void plusMinus(char *strIn, int *idx, float *result, int *status);
 void kaliBagi(char *strIn,int *idx, float *result,int *status);
+void pangkat(char *strIn,int *idx, float *result,int *status);
 void sign(char *strIn,int *idx, float *result,int *status);
 float getNumber(char *strIn, int *idx);
 

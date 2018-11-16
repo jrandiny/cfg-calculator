@@ -1,4 +1,5 @@
 #include "parser.h"
+#include <math.h>
 
 int isNumber(char strIn)
 {
@@ -33,16 +34,16 @@ void kaliBagi(char *strIn,int *idx, float *result,int *status)
   float temp;
 
   /* ALGORITMA */
-  sign(strIn,idx,result,status);
+  pangkat(strIn,idx,result,status);
 
   while((strIn[*idx] == '*') || (strIn[*idx] == '/')){
     if(strIn[*idx] == '*'){
       (*idx)++;
-      sign(strIn,idx,&temp,status);
+      pangkat(strIn,idx,&temp,status);
       (*result) *= temp;
     }else if(strIn[*idx] == '/'){
       (*idx)++;
-      sign(strIn,idx,&temp,status);
+      pangkat(strIn,idx,&temp,status);
       if(temp != 0) (*result) /= temp;
       else *status = 2; //pembagian dengan nol
     }
@@ -50,6 +51,20 @@ void kaliBagi(char *strIn,int *idx, float *result,int *status)
   /* strIn[*idx] != '*' atau '/' */
 }
 
+void pangkat(char *strIn,int *idx, float *result,int *status)
+{
+  /* KAMUS LOKAL*/
+  float temp1;
+
+  /* ALGORITMA */
+  sign(strIn,idx,result,status);
+
+  if(strIn[*idx] == '^'){
+    (*idx)++;
+    pangkat(strIn,idx,&temp1,status);
+    *result = pow(*result,temp1);
+  }
+}
 void sign(char *strIn,int *idx, float *result,int *status)
 {
   /* KAMUS LOKAL */
