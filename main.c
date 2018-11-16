@@ -1,18 +1,18 @@
 #include <stdio.h>
 #include <string.h>
-#include "Calculated.h"
+#include "parser.h"
 
 int panjangKata;
 
 int main()
-{   
+{
     //KAMUS
     boolean valid;
     int idx;
     float res;
     char s[50];
 
-    
+
     //ALGORITMA
     printf("\n");
     printf("                  888                   888          888                     \n");
@@ -29,13 +29,13 @@ int main()
     scanf("%s", s);
     while(strcmp(s,"exit") != 0){
 
-        
+
 
         valid = true;
         idx = 0;
         res = 0;
         panjangKata = strlen(s);
-        Calculate(s, &idx, &res, &valid);
+        plusMinus(s, &idx, &res, &valid);
         if (valid)
             printf(">> %.2f\n",res);
         else
@@ -47,5 +47,5 @@ int main()
     }
 
     return 0;
-    
+
 }
