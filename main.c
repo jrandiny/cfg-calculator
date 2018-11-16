@@ -2,8 +2,6 @@
 #include <string.h>
 #include "parser.h"
 
-int panjangKata;
-
 int main()
 {
     /* KAMUS */
@@ -32,7 +30,6 @@ int main()
         valid = true;
         idx = 0;
         res = 0;
-        panjangKata = strlen(s);
         plusMinus(s, &idx, &res, &valid);
         if (valid && s[idx]=='\0'){
           printf(">> %.2f\n",res);
