@@ -44,8 +44,8 @@ void kaliBagi(char *strIn,int *idx, float *result,int *status)
     }else if(strIn[*idx] == '/'){
       (*idx)++;
       pangkat(strIn,idx,&temp,status);
-      if(temp != 0) (*result) /= temp;
-      else *status = 2; //pembagian dengan nol
+      if(temp == 0) *status = 2; //pembagian dengan nol
+      else (*result) /= temp;
     }
   }
   /* strIn[*idx] != '*' atau '/' */
