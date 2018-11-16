@@ -6,14 +6,14 @@ int panjangKata;
 
 int main()
 {
-    //KAMUS
+    /* KAMUS */
     boolean valid;
     int idx;
     float res;
     char s[50];
 
 
-    //ALGORITMA
+    /* ALGORITMA */
     printf("\n");
     printf("                  888                   888          888                     \n");
     printf("                  888                   888          888                     \n");
@@ -29,17 +29,16 @@ int main()
     scanf("%s", s);
     while(strcmp(s,"exit") != 0){
 
-
-
         valid = true;
         idx = 0;
         res = 0;
         panjangKata = strlen(s);
         plusMinus(s, &idx, &res, &valid);
-        if (valid)
-            printf(">> %.2f\n",res);
-        else
-            printf(">> SINTAKS ERROR\n");
+        if (valid && s[idx]=='\0'){
+          printf(">> %.2f\n",res);
+        }else{
+          printf(">> SINTAKS ERROR\n");
+        }
 
         printf("\nSilahkan masukkan input: (ketik 'exit' untuk mengakhiri program)\n");
         printf(">> ");

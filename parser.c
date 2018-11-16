@@ -12,22 +12,19 @@ void plusMinus(char *strIn, int *idx, float *result, boolean *valid)
   char tempChar;
 
   /* ALGORITMA */
-  if (strIn[*idx]!='\0'){
-
-      kaliBagi(strIn, idx, result,valid);
-      while((strIn[*idx] == '+') ||( strIn[*idx] == '-')){
-        if(strIn[*idx] == '+'){
-          (*idx)++;
-          kaliBagi(strIn,idx,&temp,valid);
-          *result += temp;
-        }else if(strIn[*idx] == '-'){
-          (*idx)++;
-          kaliBagi(strIn,idx,&temp,valid);
-          *result -= temp;
-        }
-      }
-      /* strIn[*idx] != '+' atau '-' */
+  kaliBagi(strIn, idx, result,valid);
+  while((strIn[*idx] == '+') ||( strIn[*idx] == '-')){
+    if(strIn[*idx] == '+'){
+      (*idx)++;
+      kaliBagi(strIn,idx,&temp,valid);
+      *result += temp;
+    }else if(strIn[*idx] == '-'){
+      (*idx)++;
+      kaliBagi(strIn,idx,&temp,valid);
+      *result -= temp;
+    }
   }
+  /* strIn[*idx] != '+' atau '-' */
 }
 
 void kaliBagi(char *strIn,int *idx, float *result,boolean *valid)
@@ -49,6 +46,7 @@ void kaliBagi(char *strIn,int *idx, float *result,boolean *valid)
       (*result) /= temp;
     }
   }
+  /* strIn[*idx] != '*' atau '/' */
 }
 
 void sign(char *strIn,int *idx, float *result,boolean *valid)
