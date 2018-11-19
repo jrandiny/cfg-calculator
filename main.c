@@ -2,13 +2,18 @@
 #include <string.h>
 #include "parser.h"
 
+#ifdef __linux__
+#include <readline/readline.h>
+#include <readline/history.h>
+#endif
+
 int main()
 {
     /* KAMUS */
     int status;
     int idx;
     float res;
-    char s[50];
+    char *strIn;
 
 
     /* ALGORITMA */
@@ -23,9 +28,15 @@ int main()
     printf(" 'Y8888P 'Y888888 888  'Y8888P  'Y88888 888 'Y888888  'Y888  'Y88P'  888     \n\n");
 
     printf("Silahkan masukkan input: (ketik 'exit' untuk mengakhiri program)\n");
+
+    #ifdef __linux__
+    strIn = readline(">> ");
+    #else
     printf(">> ");
-    scanf("%s", s);
-    while(strcmp(s,"exit") != 0){
+    scanf("%s", strIn);
+    #endif
+
+    while(strcmp(strIn,"exit") != 0){
 
         status = 0;
         //status = 0 ekspresi valid
@@ -33,12 +44,12 @@ int main()
         //status = 2 math error
         idx = 0;
         res = 0;
-        plusMinus(s, &idx, &res, &status);
+        plusMinus(strIn, &idx, &res, &status);
         printf(">> ");
-        if (status==0 && s[idx]=='\0'){
+        if (status==0 && strIn[idx]=='\0'){
             printf("%.2f\n",res);
         }else{
-            if (status == 2 && s[idx] =='\0'){
+            if (status == 2 && strIn[idx] =='\0'){
                 printf("Math Error\n");
             }
             else{
@@ -47,8 +58,13 @@ int main()
         }
 
         printf("\nSilahkan masukkan input: (ketik 'exit' untuk mengakhiri program)\n");
+        
+        #ifdef __linux__
+        strIn = readline(">> ");
+        #else
         printf(">> ");
-        scanf("%s", s);
+        scanf("%s", strIn);
+        #endif
     }
 
     return 0;
