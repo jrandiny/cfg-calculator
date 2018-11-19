@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "parser.h"
+#include "signal.h"
 
 #ifdef __linux__
 #include <readline/readline.h>
@@ -17,6 +18,8 @@ int main()
 
 
     /* ALGORITMA */
+    signal(SIGINT, SIG_IGN);
+
     printf("\n");
     printf("                  888                   888          888                     \n");
     printf("                  888                   888          888                     \n");
@@ -31,6 +34,7 @@ int main()
 
     #ifdef __linux__
     strIn = readline(">> ");
+    add_history(strIn);
     #else
     printf(">> ");
     scanf("%s", strIn);
@@ -39,9 +43,11 @@ int main()
     while(strcmp(strIn,"exit") != 0){
 
         status = 0;
-        //status = 0 ekspresi valid
-        //status = 1 syntax errror
-        //status = 2 math error
+        /*
+        status = 0 ekspresi valid
+        status = 1 syntax errror
+        status = 2 math error
+        */
         idx = 0;
         res = 0;
         plusMinus(strIn, &idx, &res, &status);
@@ -58,9 +64,10 @@ int main()
         }
 
         printf("\nSilahkan masukkan input: (ketik 'exit' untuk mengakhiri program)\n");
-        
+
         #ifdef __linux__
         strIn = readline(">> ");
+        add_history(strIn);
         #else
         printf(">> ");
         scanf("%s", strIn);

@@ -10,7 +10,6 @@ void plusMinus(char *strIn, int *idx, float *result, int *status)
 {
   /* KAMUS LOKAL */
   float temp;
-  char tempChar;
 
   /* ALGORITMA */
   kaliBagi(strIn, idx, result,status);
@@ -44,7 +43,7 @@ void kaliBagi(char *strIn,int *idx, float *result,int *status)
     }else if(strIn[*idx] == '/'){
       (*idx)++;
       pangkat(strIn,idx,&temp,status);
-      if(temp == 0) *status = 2; //pembagian dengan nol
+      if(temp == 0) *status = 2; /* pembagian dengan nol */
       else (*result) /= temp;
     }
   }
@@ -62,8 +61,8 @@ void pangkat(char *strIn,int *idx, float *result,int *status)
   if(strIn[*idx] == '^'){
     (*idx)++;
     pangkat(strIn,idx,&temp1,status);
-    if(*result == 0 && temp1 <= 0) {*status = 2;} //0 pangkat 0 atau 0 pangkat negatif
-    else if (*result <0 && trunc(temp1) != temp1) {*status = 2;} //negatif pangkat pecahan
+    if(*result == 0 && temp1 <= 0) {*status = 2;} /* 0 pangkat 0 atau 0 pangkat negatif */
+    else if (*result <0 && trunc(temp1) != temp1) {*status = 2;}/* negatif pangkat pecahan */
     else {*result = pow(*result,temp1);}
   }
 }
@@ -76,7 +75,8 @@ void sign(char *strIn,int *idx, float *result,int *status)
     (*idx)++;
     if(strIn[*idx]=='-'){
       (*idx)++;
-      *result = -1 * getNumber(strIn, idx);
+      number(strIn, idx, result, status);
+      *result *= -1;
       if(strIn[*idx] == ')'){
         (*idx)++;
       }else{
@@ -91,22 +91,15 @@ void sign(char *strIn,int *idx, float *result,int *status)
       }
     }
   }else{
-    /* Cek negatif*/
-    if(strIn[*idx] == '-'){
-      *status = 1;
-    }else{
-      *result = 1;
-    }
-
     if(isNumber(strIn[*idx])){
-      *result *= getNumber(strIn, idx);
+      number(strIn, idx, result, status);
     }else{
       *status = 1;
     }
   }
 }
 
-float getNumber(char *strIn, int *idx)
+void number(char *strIn, int *idx, float *result, int *status)
 {
   /* KAMUS LOKAL */
   float temp;
@@ -148,5 +141,5 @@ float getNumber(char *strIn, int *idx)
   }while(isNumber(tempChar));
   /* !isNumber(tempChar) */
 
-  return temp;
+  *result = temp;
 }
