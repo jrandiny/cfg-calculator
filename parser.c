@@ -63,7 +63,7 @@ void pangkat(char *strIn,int *idx, float *result,int *status)
     (*idx)++;
     pangkat(strIn,idx,&temp1,status);
     if(*result == 0 && temp1 <= 0) {*status = 2;} //0 pangkat 0 atau 0 pangkat negatif
-    else if (*result <0 && trunc(temp1) != temp1) {*status = 2;} //negatif pangkat pecahan 
+    else if (*result <0 && trunc(temp1) != temp1) {*status = 2;} //negatif pangkat pecahan
     else {*result = pow(*result,temp1);}
   }
 }
@@ -74,17 +74,26 @@ void sign(char *strIn,int *idx, float *result,int *status)
   /* ALGORITMA */
   if(strIn[*idx] == '('){
     (*idx)++;
-    plusMinus(strIn,idx,result,status);
-    if(strIn[*idx] == ')'){
+    if(strIn[*idx]=='-'){
       (*idx)++;
+      *result = -1 * getNumber(strIn, idx);
+      if(strIn[*idx] == ')'){
+        (*idx)++;
+      }else{
+        *status = 1;
+      }
     }else{
-      *status = 1;
+      plusMinus(strIn,idx,result,status);
+      if(strIn[*idx] == ')'){
+        (*idx)++;
+      }else{
+        *status = 1;
+      }
     }
   }else{
     /* Cek negatif*/
     if(strIn[*idx] == '-'){
-      (*idx)++;
-      *result = -1;
+      *status = 1;
     }else{
       *result = 1;
     }
