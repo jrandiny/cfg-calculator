@@ -91,7 +91,19 @@ void sign(char *strIn,int *idx, float *result,int *status)
       }
     }
   }else{
-    if(isNumber(strIn[*idx])){
+    if(strIn[*idx]=='-'){
+      (*idx)++;
+      if(strIn[*idx] == '('){
+        (*idx)++;
+        plusMinus(strIn, idx, result, status);
+        if(strIn[*idx] == ')'){
+          *result *= -1;
+          (*idx)++;
+        }else{
+          *status = 1;
+        }
+      }
+    }else if(isNumber(strIn[*idx])){
       number(strIn, idx, result, status);
     }else{
       *status = 1;
